@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1038958997231",
+    "project_id": "neobischatapp",
+    "storage_bucket": "neobischatapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1038958997231:android:a242a960d33420f3c2351a",
+        "android_client_info": {
+          "package_name": "com.android.chatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1038958997231-4dn1cn9u88b5isgsdij73k7gv0fo0hnn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArKG1_YJ1-Nklz_S1VrK4Q594L9kK7cxk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1038958997231-4dn1cn9u88b5isgsdij73k7gv0fo0hnn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
