@@ -14,11 +14,11 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.activity_main.*
 import java.util.concurrent.TimeUnit
 
 class AuthActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityMainBinding
     private var forceResendingToken: PhoneAuthProvider.ForceResendingToken? = null
     private var mCallBacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks? = null
     private var mVerificationId: String? = null
@@ -26,11 +26,10 @@ class AuthActivity : AppCompatActivity() {
     private lateinit var progressDialog: ProgressDialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_main)
 
-        binding.phoneLl.visibility = View.VISIBLE
-        binding.codeLl.visibility = View.GONE
+        phoneLl.visibility = View.VISIBLE
+        codeLl.visibility = View.GONE
 
         firebaseAuth= FirebaseAuth.getInstance()
         progressDialog = ProgressDialog(this)
@@ -52,8 +51,8 @@ class AuthActivity : AppCompatActivity() {
                 forceResendingToken = token
                 progressDialog.dismiss()
 
-                binding.phoneLl.visibility = View.GONE
-                binding.codeLl.visibility = View.VISIBLE
+                phoneLl.visibility = View.GONE
+                codeLl.visibility = View.VISIBLE
 
                 Toast.makeText(this@AuthActivity,"Verification code sent ...", Toast.LENGTH_SHORT).show()
 
@@ -61,16 +60,16 @@ class AuthActivity : AppCompatActivity() {
             }
         }
 
-        binding.phoneContinueBtn.setOnClickListener{
-            val phone = binding.phoneEt.text.toString().trim()
+        phoneContinueBtn.setOnClickListener{
+            val phone = phoneEt.text.toString().trim()
             if(TextUtils.isEmpty(phone)){
                 Toast.makeText(this@AuthActivity,"Please Enter phone number", Toast.LENGTH_SHORT).show()
             }else{
                 startPhoneNumberVerification(phone)
             }
         }
-        binding.resendCodeTv.setOnClickListener{
-            val phone = binding.phoneEt.text.toString().trim()
+        resendCodeTv.setOnClickListener{
+            val phone = phoneEt.text.toString().trim()
             if(TextUtils.isEmpty(phone)){
                 Toast.makeText(this@AuthActivity,"Please Enter phone number", Toast.LENGTH_SHORT).show()
             }else{
@@ -78,8 +77,8 @@ class AuthActivity : AppCompatActivity() {
             }
         }
 
-        binding.codeSubmitBtn.setOnClickListener {
-            val code = binding.codeEt.text.trim()
+        codeSubmitBtn.setOnClickListener {
+            val code = codeEt.text.trim()
             if(TextUtils.isEmpty(code)){
                 Toast.makeText(this@AuthActivity,"Please Enter code", Toast.LENGTH_SHORT).show()
             }else{
@@ -162,7 +161,7 @@ class AuthActivity : AppCompatActivity() {
     private fun saveUserToFirebaseDatabase(){
         val uid = FirebaseAuth.getInstance().uid ?: ""
         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
-        val user = User(uid,binding.phoneEt.text.toString())
+        val user = User(uid,phoneEt.text.toString())
 
         ref.setValue(user)
             .addOnSuccessListener {
@@ -171,4 +170,6 @@ class AuthActivity : AppCompatActivity() {
             }
     }
 }
-class User(val uid: String, val username: String)
+class User(val uid: String, val username: String){
+    constructor(): this("","")
+}
