@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.android.chatapp.databinding.ActivityLatestMessagesBinding
-import com.android.chatapp.databinding.ActivityProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 
 class LatestMessagesActivity : AppCompatActivity() {
