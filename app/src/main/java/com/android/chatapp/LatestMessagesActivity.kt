@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.android.chatapp.model.ChatMessage
 import com.android.chatapp.model.User
 import com.google.firebase.auth.FirebaseAuth
@@ -28,6 +29,14 @@ class LatestMessagesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_latest_messages)
 
         recyclerview_latest_messages.adapter = adapter
+        recyclerview_latest_messages.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+
+        adapter.setOnItemClickListener { item, view ->
+            val intent = Intent(this,ChatLogActivity::class.java)
+            val row = item as LatestMessageRow
+            intent.putExtra(NewMessageActivity.USER_KEY,row.chatPartnerUser )
+            startActivity(intent)
+        }
 
         listenForLatestMessages()
 
@@ -74,35 +83,6 @@ class LatestMessagesActivity : AppCompatActivity() {
         })
     }
 
-    class LatestMessageRow(val chatMessage: ChatMessage): Item<ViewHolder>(){
-        override fun bind(viewHolder: ViewHolder, position: Int) {
-            viewHolder.itemView.textView_latest_message.text = chatMessage.text
-            val chatPartnerId :String
-            if (chatMessage.toId == FirebaseAuth.getInstance().uid ){
-                chatPartnerId = chatMessage.fromId
-            }else{
-                chatPartnerId = chatMessage.toId
-            }
-
-            val ref = FirebaseDatabase.getInstance().getReference("/users/$chatPartnerId")
-            ref.addListenerForSingleValueEvent(object : ValueEventListener{
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val user = snapshot.getValue(User::class.java)
-                    viewHolder.itemView.username_textView_latest_message.text = user?.username
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                }
-
-            })
-
-        }
-
-        override fun getLayout(): Int {
-            return R.layout.latest_message_row
-        }
-
-    }
     val adapter = GroupAdapter<ViewHolder>()
 
 
