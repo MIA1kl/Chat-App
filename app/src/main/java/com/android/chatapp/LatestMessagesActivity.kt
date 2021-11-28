@@ -77,6 +77,25 @@ class LatestMessagesActivity : AppCompatActivity() {
     class LatestMessageRow(val chatMessage: ChatMessage): Item<ViewHolder>(){
         override fun bind(viewHolder: ViewHolder, position: Int) {
             viewHolder.itemView.textView_latest_message.text = chatMessage.text
+            val chatPartnerId :String
+            if (chatMessage.toId == FirebaseAuth.getInstance().uid ){
+                chatPartnerId = chatMessage.fromId
+            }else{
+                chatPartnerId = chatMessage.toId
+            }
+
+            val ref = FirebaseDatabase.getInstance().getReference("/users/$chatPartnerId")
+            ref.addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val user = snapshot.getValue(User::class.java)
+                    viewHolder.itemView.username_textView_latest_message.text = user?.username
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                }
+
+            })
+
         }
 
         override fun getLayout(): Int {
