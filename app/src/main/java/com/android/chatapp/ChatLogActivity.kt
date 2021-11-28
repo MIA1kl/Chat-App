@@ -25,14 +25,16 @@ class ChatLogActivity : AppCompatActivity() {
 
     val adapter = GroupAdapter<ViewHolder>()
 
+    var toUser : User? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_log)
 
         recyclerview_chat_log.adapter = adapter
 
-        val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
-        supportActionBar?.title = user?.username
+        toUser = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
+        supportActionBar?.title = toUser?.username
 //        setupDummyData()
 
         listenForMessages()
@@ -52,9 +54,10 @@ class ChatLogActivity : AppCompatActivity() {
                     Log.d(TAG, chatMessage.text)
 
                     if (chatMessage.toId == FirebaseAuth.getInstance().uid){
-                        adapter.add(ChatToItem(chatMessage.text))
+                        val currentUser = LatestMessagesActivity.currentUser
+                        adapter.add(ChatToItem(chatMessage.text,currentUser!!))
                     }else{
-                        adapter.add(ChatFromItem(chatMessage.text))
+                        adapter.add(ChatFromItem(chatMessage.text, toUser!!))
                     }
                 }
             }
@@ -93,17 +96,9 @@ class ChatLogActivity : AppCompatActivity() {
                 Log.d(TAG, "Saved pur chat message: ${reference.key}")
             }
     }
-
-    private fun setupDummyData(){
-        val adapter = GroupAdapter<ViewHolder>()
-        adapter.add(ChatFromItem("From message which is printed"))
-        adapter.add(ChatToItem("To message which is \nshown"))
-        recyclerview_chat_log.adapter = adapter
-    }
-
 }
 
-class ChatFromItem(val text : String):Item<ViewHolder>(){
+class ChatFromItem(val text : String, val user:User):Item<ViewHolder>(){
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.textView_from_row.text = text
     }
@@ -114,7 +109,7 @@ class ChatFromItem(val text : String):Item<ViewHolder>(){
 
 }
 
-class ChatToItem(val text: String):Item<ViewHolder>(){
+class ChatToItem(val text: String, val user :User):Item<ViewHolder>(){
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.textView_to_row.text = text
     }
