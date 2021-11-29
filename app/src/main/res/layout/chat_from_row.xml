@@ -13,8 +13,9 @@
         android:layout_marginStart="16dp"
         android:maxWidth="240dp"
         android:textSize="15dp"
+        android:textColor="@color/black"
         android:text="TextView regjdlssjksjd sldjfgks sjdfkghskjhdkf skdfgkjshkhgfd skdfgk"
-        android:background="@color/white"
+        android:background="@drawable/message_shape"
         android:padding="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

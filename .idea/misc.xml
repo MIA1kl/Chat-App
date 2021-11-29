@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/AndroidStudioProjects/Akotlinplan/ChatApp/app/src/main/res/drawable/ic_baseline_chat_24.xml" value="0.19583333333333333" />
         <entry key="..\:/AndroidStudioProjects/Akotlinplan/ChatApp/app/src/main/res/drawable/ic_baseline_send_24.xml" value="0.19583333333333333" />
+        <entry key="..\:/AndroidStudioProjects/Akotlinplan/ChatApp/app/src/main/res/drawable/message_shape.xml" value="0.19583333333333333" />
         <entry key="..\:/AndroidStudioProjects/Akotlinplan/ChatApp/app/src/main/res/layout/activity_chat_log.xml" value="0.13999999999999999" />
         <entry key="..\:/AndroidStudioProjects/Akotlinplan/ChatApp/app/src/main/res/layout/activity_latest_messages.xml" value="0.10552536231884058" />
         <entry key="..\:/AndroidStudioProjects/Akotlinplan/ChatApp/app/src/main/res/layout/activity_main.xml" value="0.1796875" />
